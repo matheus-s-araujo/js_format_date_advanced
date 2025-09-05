@@ -10,6 +10,7 @@
  */
 function formatDate(date, fromFormat, toFormat) {
   const dateSplitted = date.split(fromFormat[3]);
+  const newDate = toFormat;
   let oldDayPosition = 0;
   let newDayPosition = 0;
   let oldMonthPosition = 0;
@@ -18,7 +19,7 @@ function formatDate(date, fromFormat, toFormat) {
   let newYearPosition = 0;
 
   // Loop that gets the position of the day, the month and the year
-  for (let p = 0; p < toFormat.length; p++) {
+  for (let p = 0; p < newDate.length; p++) {
     // Get the date positions for the old format
     if (fromFormat[p] === 'DD') {
       oldDayPosition = p;
@@ -29,121 +30,118 @@ function formatDate(date, fromFormat, toFormat) {
     }
 
     // Get the date positions for the new format
-    if (toFormat[p] === 'DD') {
+    if (newDate[p] === 'DD') {
       newDayPosition = p;
-    } else if (toFormat[p] === 'MM') {
+    } else if (newDate[p] === 'MM') {
       newMonthPosition = p;
-    } else if (toFormat[p] === 'YY' || toFormat[p] === 'YYYY') {
+    } else if (newDate[p] === 'YY' || newDate[p] === 'YYYY') {
       newYearPosition = p;
     }
   }
 
   // Putting the year in the rigth format if the position is 0
   if (oldYearPosition === 0 && fromFormat[0] === 'YY') {
-    if (toFormat[newYearPosition] === 'YY') {
-      toFormat[newYearPosition] = dateSplitted[0];
-    } else if (toFormat[newYearPosition] === 'YYYY') {
-      if (dateSplitted[0] >= 30) {
-        toFormat[newYearPosition] = '19' + dateSplitted[0];
+    if (newDate[newYearPosition] === 'YY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition];
+    } else if (newDate[newYearPosition] === 'YYYY') {
+      if (dateSplitted[oldYearPosition] < 30) {
+        newDate[newYearPosition] = '20' + dateSplitted[oldYearPosition];
       } else {
-        toFormat[newYearPosition] = '20' + dateSplitted[0];
+        newDate[newYearPosition] = '19' + dateSplitted[oldYearPosition];
       }
 
       // Taking the day in the rigth format and position from the date
-      toFormat[newDayPosition] = dateSplitted[oldDayPosition];
+      newDate[newDayPosition] = dateSplitted[oldDayPosition];
 
       // Taking the month in the rigth format and position from the date
-      toFormat[newMonthPosition] = dateSplitted[oldMonthPosition];
+      newDate[newMonthPosition] = dateSplitted[oldMonthPosition];
     }
   } else if (oldYearPosition === 0 && fromFormat[0] === 'YYYY') {
-    if (toFormat[newYearPosition] === 'YY') {
-      toFormat[newYearPosition] = dateSplitted[0].slice(2, 5);
-    } else if (toFormat[newYearPosition] === 'YYYY') {
-      toFormat[newYearPosition] = dateSplitted[0];
+    if (newDate[newYearPosition] === 'YY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition].slice(2, 4);
+    } else if (newDate[newYearPosition] === 'YYYY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition];
     }
 
     // Taking the day in the rigth format and position from the date
-    toFormat[newDayPosition] = dateSplitted[oldDayPosition];
+    newDate[newDayPosition] = dateSplitted[oldDayPosition];
 
     // Taking the month in the rigth format and position from the date
-    toFormat[newMonthPosition] = dateSplitted[oldMonthPosition];
-
-    console.log(toFormat);
+    newDate[newMonthPosition] = dateSplitted[oldMonthPosition];
   }
 
   // -----------------------------------------------------------------------
 
   // Putting the year in the rigth format if the position is 1
   if (oldYearPosition === 1 && fromFormat[1] === 'YY') {
-    if (toFormat[newYearPosition] === 'YY') {
-      toFormat[newYearPosition] = dateSplitted[oldYearPosition];
-    } else if (toFormat[newYearPosition] === 'YYYY') {
+    if (newDate[newYearPosition] === 'YY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition];
+    } else if (newDate[newYearPosition] === 'YYYY') {
       if (dateSplitted[oldYearPosition] > 30) {
-        toFormat[newYearPosition] = '19' + dateSplitted[oldYearPosition];
+        newDate[newYearPosition] = '19' + dateSplitted[oldYearPosition];
       } else {
-        toFormat[newYearPosition] = '20' + dateSplitted[oldYearPosition];
+        newDate[newYearPosition] = '20' + dateSplitted[oldYearPosition];
       }
 
       // Taking the day in the rigth format and position from the date
-      toFormat[newDayPosition] = dateSplitted[oldDayPosition];
+      newDate[newDayPosition] = dateSplitted[oldDayPosition];
 
       // Taking the month in the rigth format and position from the date
-      toFormat[newMonthPosition] = dateSplitted[oldMonthPosition];
+      newDate[newMonthPosition] = dateSplitted[oldMonthPosition];
     }
   } else if (oldYearPosition === 1 && fromFormat[1] === 'YYYY') {
-    if (toFormat[newYearPosition] === 'YY') {
-      toFormat[newYearPosition] = dateSplitted[oldYearPosition].slice(2, 5);
-    } else if (toFormat[newYearPosition] === 'YYYY') {
-      toFormat[newYearPosition] = dateSplitted[oldYearPosition];
+    if (newDate[newYearPosition] === 'YY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition].slice(2, 5);
+    } else if (newDate[newYearPosition] === 'YYYY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition];
     }
 
     // Taking the day in the rigth format and position from the date
-    toFormat[newDayPosition] = dateSplitted[oldDayPosition];
+    newDate[newDayPosition] = dateSplitted[oldDayPosition];
 
     // Taking the month in the rigth format and position from the date
-    toFormat[newMonthPosition] = dateSplitted[oldMonthPosition];
-    console.log(dateSplitted);
+    newDate[newMonthPosition] = dateSplitted[oldMonthPosition];
   }
 
   // -----------------------------------------------------------------------
 
   // Putting the year in the rigth format if the position is 2
   if (oldYearPosition === 2 && fromFormat[2] === 'YY') {
-    if (toFormat[newYearPosition] === 'YY') {
-      toFormat[newYearPosition] = dateSplitted[2];
-    } else if (toFormat[newYearPosition] === 'YYYY') {
+    if (newDate[newYearPosition] === 'YY') {
+      newDate[newYearPosition] = dateSplitted[2];
+    } else if (newDate[newYearPosition] === 'YYYY') {
       if (dateSplitted[oldYearPosition] > 30) {
-        toFormat[newYearPosition] = '19' + dateSplitted[2];
+        newDate[newYearPosition] = '19' + dateSplitted[2];
       } else {
-        toFormat[newYearPosition] = '20' + dateSplitted[2];
+        newDate[newYearPosition] = '20' + dateSplitted[2];
       }
 
       // Taking the day in the rigth format and position from the date
-      toFormat[newDayPosition] = dateSplitted[oldDayPosition];
+      newDate[newDayPosition] = dateSplitted[oldDayPosition];
 
       // Taking the month in the rigth format and position from the date
-      toFormat[newMonthPosition] = dateSplitted[oldMonthPosition];
+      newDate[newMonthPosition] = dateSplitted[oldMonthPosition];
     }
   } else if (oldYearPosition === 2 && fromFormat[2] === 'YYYY') {
-    if (toFormat[newYearPosition] === 'YY') {
-      toFormat[newYearPosition] = dateSplitted[oldYearPosition].slice(2, 5);
-    } else if (toFormat[newYearPosition] === 'YYYY') {
-      toFormat[newYearPosition] = dateSplitted[oldYearPosition];
+    if (newDate[newYearPosition] === 'YY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition].slice(2, 5);
+    } else if (newDate[newYearPosition] === 'YYYY') {
+      newDate[newYearPosition] = dateSplitted[oldYearPosition];
     }
 
     // Taking the day in the rigth format and position from the date
-    toFormat[newDayPosition] = dateSplitted[oldDayPosition];
+    newDate[newDayPosition] = dateSplitted[oldDayPosition];
 
     // Taking the month in the rigth format and position from the date
-    toFormat[newMonthPosition] = dateSplitted[oldMonthPosition];
+    newDate[newMonthPosition] = dateSplitted[oldMonthPosition];
   }
 
   let dateResult = '';
 
-  if (toFormat[newYearPosition].length === 2) {
-    dateResult = toFormat.join(toFormat[3]).slice(0, 8);
-  } else if (toFormat[newYearPosition].length === 4) {
-    dateResult = toFormat.join(toFormat[3]).slice(0, 10);
+  if (newDate[newYearPosition].length === 2) {
+    dateResult = newDate.join(newDate[3]).slice(0, 8);
+  } else if (newDate[newYearPosition].length === 4) {
+    dateResult = newDate.join(newDate[3]).slice(0, 10);
   }
 
   return dateResult;
